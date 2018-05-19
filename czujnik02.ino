@@ -26,9 +26,6 @@ void setup() {
 
 void loop() {
   long timeRight, timeLeft, distanceRight, distanceLeft, distance;
-  int i;
-  char starsLeft[9] = {' ',' ',' ',' ',' ',' ',' ',' ','/0'};
-  char starsRight[9] = {' ',' ',' ',' ',' ',' ',' ',' ','/0'};
   
 //wykonanie pomiaru prawego czujnika
   digitalWrite(trigRightPin, LOW); //ustawienie stanu niskiego
@@ -50,144 +47,6 @@ void loop() {
   distanceRight = timeRight / 58;   //odległość od prawego czujnika
   distanceLeft = timeLeft / 58;     //odległość od lewego czujnika
 
-//zapalanie lewej strony segementów - czujnik lewy
-  if(distanceLeft <= scope1){
-    for(i=0;i<9;i++)
-      starsLeft[i]='*';
-  }
-  else{
-    if((distanceLeft>scope1) && (distanceLeft<=scope2))
-      for(i=0;i<9;i++){
-        if(i<7)
-          starsLeft[i]='*';
-        else
-          starsLeft[i]=' ';
-      }
-     else{
-        if((distanceLeft>scope2) && (distanceLeft<=scope3))
-          for(i=0;i<9;i++){
-            if(i<6)
-              starsLeft[i]='*';
-            else
-              starsLeft[i]=' ';
-          }
-        else{
-          if((distanceLeft>scope3) && (distanceLeft<=scope4))
-            for(i=0;i<9;i++){
-              if(i<5)
-                starsLeft[i]='*';
-              else
-                starsLeft[i]=' ';
-            }
-          else{
-            if((distanceLeft>scope4) && (distanceLeft<=scope5))
-              for(i=0;i<9;i++){
-                if(i<4)
-                  starsLeft[i]='*';
-                else
-                  starsLeft[i]=' ';
-              }
-             else{
-               if((distanceLeft>scope5) && (distanceLeft<=scope6))
-                  for(i=0;i<9;i++){
-                    if(i<3)
-                      starsLeft[i]='*';
-                    else
-                      starsLeft[i]=' ';
-                  }
-               else{
-                  if((distanceLeft>scope6) && (distanceLeft<=scope7))
-                    for(i=0;i<9;i++){
-                      if(i<2)
-                        starsLeft[i]='*';
-                      else
-                        starsLeft[i]=' ';
-                    }
-                  else{
-                    if((distanceLeft>scope7) && (distanceLeft<=scope8))
-                      for(i=0;i<9;i++){
-                        if(i<1)
-                          starsLeft[i]='*';
-                        else
-                          starsLeft[i]=' ';
-                      }
-                  }
-               }
-             }
-          }
-        }
-     }
-  }
-
-//zapalanie prawej strony segementów - czujnik prawy
-  if(distanceRight <= scope1){
-    for(i=0;i<9;i++)
-      starsRight[i]='*';
-  }
-  else{
-    if((distanceRight>scope1) && (distanceRight<=scope2))
-      for(i=0;i<9;i++){
-        if(i<1)
-          starsRight[i]=' ';
-        else
-          starsRight[i]='*';
-      }
-     else{
-        if((distanceRight>scope2) && (distanceRight<=scope3))
-          for(i=0;i<9;i++){
-            if(i<2)
-              starsRight[i]=' ';
-            else
-              starsRight[i]='*';
-          }
-        else{
-          if((distanceRight>scope3) && (distanceRight<=scope4))
-            for(i=0;i<9;i++){
-              if(i<3)
-                starsRight[i]=' ';
-              else
-                starsRight[i]='*';
-            }
-          else{
-            if((distanceRight>scope4) && (distanceRight<=scope5))
-              for(i=0;i<9;i++){
-                if(i<4)
-                  starsRight[i]=' ';
-                else
-                  starsRight[i]='*';
-              }
-             else{
-               if((distanceRight>scope5) && (distanceRight<=scope6))
-                  for(i=0;i<9;i++){
-                    if(i<5)
-                      starsRight[i]=' ';
-                    else
-                      starsRight[i]='*';
-                  }
-               else{
-                  if((distanceRight>scope6) && (distanceRight<=scope7))
-                    for(i=0;i<9;i++){
-                      if(i<6)
-                        starsRight[i]=' ';
-                      else
-                        starsRight[i]='*';
-                    }
-                  else{
-                    if((distanceRight>scope7) && (distanceRight<=scope8))
-                      for(i=0;i<9;i++){
-                        if(i<7)
-                          starsRight[i]=' ';
-                        else
-                          starsRight[i]='*';
-                      }
-                  }
-               }
-             }
-          }
-        }
-     }
-  }
-
 //ustawienie najbliższej odległości z danych dwóch czujników
   if(distanceRight<distanceLeft)
     distance=distanceRight;
@@ -196,9 +55,79 @@ void loop() {
   
 //wyświetlanie informacji
   lcd.setCursor(0, 0);    //ustawienie kursora na górny wiersz od segmentu 0
-  lcd.print(starsLeft);   //zapalanie "*" z lewej strony
+  
+//zapalanie lewej strony segementów - czujnik lewy
+  if(distanceLeft <= scope1){
+    lcd.print("********");
+  }
+  else{
+    if((distanceLeft>scope1) && (distanceLeft<=scope2))
+      lcd.print("******* ");
+     else{
+        if((distanceLeft>scope2) && (distanceLeft<=scope3))
+          lcd.print("******  ");
+        else{
+          if((distanceLeft>scope3) && (distanceLeft<=scope4))
+            lcd.print("*****   ");
+          else{
+            if((distanceLeft>scope4) && (distanceLeft<=scope5))
+              lcd.print("****    ");
+             else{
+               if((distanceLeft>scope5) && (distanceLeft<=scope6))
+                  lcd.print("***     ");
+               else{
+                  if((distanceLeft>scope6) && (distanceLeft<=scope7))
+                    lcd.print("**      ");
+                  else{
+                    if((distanceLeft>scope7) && (distanceLeft<=scope8))
+                      lcd.print("*       ");
+                    else
+                      lcd.print("        ");
+                  }
+               }
+             }
+          }
+        }
+     }
+  }
+
   lcd.setCursor(8, 0);    // ustawinie kursora na górny wiersz od segmentu 8
-  lcd.print(starsRight);  //zapalanie "*" z prawej strony
+
+//zapalanie prawej strony segementów - czujnik prawy
+  if(distanceRight <= scope1){
+    lcd.print("********");
+  }
+  else{
+    if((distanceRight>scope1) && (distanceRight<=scope2))
+      lcd.print(" *******");
+     else{
+        if((distanceRight>scope2) && (distanceRight<=scope3))
+          lcd.print("  ******");
+        else{
+          if((distanceRight>scope3) && (distanceRight<=scope4))
+            lcd.print("   *****");
+          else{
+            if((distanceRight>scope4) && (distanceRight<=scope5))
+              lcd.print("    ****");
+             else{
+               if((distanceRight>scope5) && (distanceRight<=scope6))
+                  lcd.print("     ***");
+               else{
+                  if((distanceRight>scope6) && (distanceRight<=scope7))
+                    lcd.print("      **");
+                  else{
+                    if((distanceRight>scope7) && (distanceRight<=scope8))
+                      lcd.print("       *");
+                    else
+                      lcd.print("        ");
+                  }
+               }
+             }
+          }
+        }
+     }
+  }
+
   lcd.setCursor(6, 1);    //ustawienie kursora na dolny wiersz od segmentu 6
   if(distance <= scope8){
     lcd.print(distance);    //wyświetlanie najbliższej odległości
