@@ -1,0 +1,9 @@
+Opis schematu:
+- układ Arduino UNO
+- wyświetlacz LCD 16x2
+- czujnik ultradźwiękowy HC-SR04 (2 szt.)
+- buzzer z generatorem
+- potencjometr B10k
+- płytka stykowa
+- przewody połączeniowe
+- zasilanie poprzez port USB z komputera
