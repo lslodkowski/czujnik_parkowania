@@ -1,0 +1,9 @@
+Wymagania funkcjonalne:
+- urządzenie ma sygnalizować włączenie krótkim sygnałem dźwiękowym,
+- wyłączone urządzenie ma nie wyświetlać żadnych informacji ani nie wydawać sygnałów dźwiękowych,
+- urządzenie ma mierzyć odległość jednocześnie przez dwa czujniki odległości,
+- urządzenie ma mierzyć odległość od przeszkody w określonym zakresie,
+- urządzenie ma generować sygnał dźwiękowy w przypadku zbliżania się do przeszkody w taki sposób, że częstotliwość dźwięku wzrasta odwrotnie proporcjonalnie do odległości od przeszkody,
+- urządzenie ma wyświetlać informację o odległości w centymetrach w taki sposób, że na wyświetlaczu będzie pojawiała się odległość z czujnika, który znajduje się bliżej przeszkody,
+- urządzenie ma wyświetlać informację o odległości od przeszkody dwóch czujników w sposób graficzny,
+- urządzenie ma wyświetlać informację „OK”, gdy odległość od przeszkody jest bezpieczna, czyli jest spoza zakresu pomiaru.
