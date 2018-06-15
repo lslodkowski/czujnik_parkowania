@@ -22,30 +22,19 @@ void setup() {
   pinMode(trigLeftPin, OUTPUT);  //trigger, jako wyjście
   pinMode(echoLeftPin, INPUT);   //echo, jako wejście
   pinMode(buzzPin, OUTPUT);      //buzzer, jako wyjście
+//sygnalizacja włączenia czujnika
+  digitalWrite(buzzPin, HIGH);
+  delay(500);
+  digitalWrite(buzzPin, LOW);
 }
 
 void loop() {
-  long timeRight, timeLeft, distanceRight, distanceLeft, distance;
+  long distanceRight, distanceLeft, distance;
   
 //wykonanie pomiaru prawego czujnika
-  digitalWrite(trigRightPin, LOW); //ustawienie stanu niskiego
-  delayMicroseconds(2); //opóźnienie
-  digitalWrite(trigRightPin, HIGH);  //ustawienie stanu wysokiego
-  delayMicroseconds(10);  //opóźnienie
-  digitalWrite(trigRightPin, LOW); //ustawienie stanu niskiego
-  timeRight = pulseIn(echoRightPin, HIGH);  //pomiar czasu prawego czujnika
-
+  distanceRight = getDistance(trigRightPin,echoRightPin);
 //wykonanie pomiaru lewego czujnika
-  digitalWrite(trigLeftPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigLeftPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigLeftPin, LOW);
-  timeLeft = pulseIn(echoLeftPin, HIGH); //pomiar czasu lewego czujnika
-  
-//Aby uzyskać odległość w cm, należy czas podzielić przez 58 (informacja od producenta).
-  distanceRight = timeRight / 58;   //odległość od prawego czujnika
-  distanceLeft = timeLeft / 58;     //odległość od lewego czujnika
+  distanceLeft = getDistance(trigLeftPin,echoLeftPin);
 
 //ustawienie najbliższej odległości z danych dwóch czujników
   if(distanceRight<distanceLeft)
@@ -54,6 +43,7 @@ void loop() {
     distance=distanceLeft;
   
 //wyświetlanie informacji
+  lcd.clear();
   lcd.setCursor(0, 0);    //ustawienie kursora na górny wiersz od segmentu 0
   
 //zapalanie lewej strony segementów - czujnik lewy
@@ -131,10 +121,10 @@ void loop() {
   lcd.setCursor(6, 1);    //ustawienie kursora na dolny wiersz od segmentu 6
   if(distance <= scope8){
     lcd.print(distance);    //wyświetlanie najbliższej odległości
-    lcd.print(" cm");       //wyświetlanie informacji o jednostce odległości (cm)
+    lcd.print(" cm ");       //wyświetlanie informacji o jednostce odległości (cm)
   }
   else
-    lcd.clear();          //czyszczenie informacji na wyświetlaczu, gdy odległość jest duża
+    lcd.print(" OK      ");  //czujnik działa, a odległość jest bezpieczna
   
 //ustawienie buzzera w stan wysoki i niski uzależnione jest od odległości (distance)
 //im bliżej przeszkody, tym przełączenie HIGH/LOW odbywa się częściej (delay uzależnione jest od distance)
@@ -146,4 +136,17 @@ void loop() {
   }
   else
     delay(250); //opóźnienie dla całej pętli
+}
+
+//funkcja zwraca odegłość od czujnika w centymetrach
+long getDistance (int trigger, int echo){
+  long timeTE;
+  digitalWrite(trigger, LOW); //ustawienie stanu niskiego
+  delayMicroseconds(2); //opóźnienie
+  digitalWrite(trigger, HIGH);  //ustawienie stanu wysokiego
+  delayMicroseconds(10);  //opóźnienie
+  digitalWrite(trigger, LOW); //ustawienie stanu niskiego
+  timeTE = pulseIn(echo, HIGH);  //pomiar czasu czujnika
+  //Aby uzyskać odległość w cm, należy czas podzielić przez 58 (informacja od producenta).
+  return timeTE / 58;
 }
